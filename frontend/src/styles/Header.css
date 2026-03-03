@@ -1,0 +1,29 @@
+.header {
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-side {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.header-logo {
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+  transform: scale(1.1);
+}
+
+.header-title {
+  margin: 0 1rem;
+  font-size: 1.8rem;
+  color: black;
+}
