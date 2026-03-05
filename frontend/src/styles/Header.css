@@ -1,29 +1,34 @@
 .header {
-  padding: 1.5rem 2rem;
-  background: #ffffff;
+  background: white;
+  width: 100%;
+}
 
-  display: flex;
+.header-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: center;
+  column-gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.header-side {
-  width: 60px;
-  display: flex;
-  justify-content: center;
-}
-
-.header-logo {
-  height: 40px;
-  transition: transform 0.3s ease;
-}
-
-.header-logo:hover {
-  transform: scale(1.1);
+.header-left {
+  justify-self: start;
 }
 
 .header-title {
-  margin: 0 1rem;
+  text-align: center;
+  margin: 0;
   font-size: 1.8rem;
   color: black;
+}
+
+.header-right {
+  justify-self: end;
+}
+
+.header-logo {
+  height: 80px;
+  width: auto;
 }

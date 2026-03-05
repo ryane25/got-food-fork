@@ -5,16 +5,18 @@ import logo2 from "../assets/hokie_bird.png";
 function Header() {
   return (
     <header className="header">
-      <div className="header-side">
-        <img src={logo1} alt="Logo" className="header-logo" />
-      </div>
+      <div className="header-container">
+        <div className="header-left">
+          <img src={logo1} alt="Logo" className="header-logo" />
+        </div>
 
-      <h1 className="header-title">
-        VT Grad School Food Resources for the Northern Virginia Area
-      </h1>
+        <h1 className="header-title">
+          Food Resources in the Northern Virginia Area
+        </h1>
 
-      <div className="header-side">
-        <img src={logo2} alt="Logo" className="header-logo" />
+        <div className="header-right">
+          <img src={logo2} alt="Logo" className="header-logo" />
+        </div>
       </div>
     </header>
   );
