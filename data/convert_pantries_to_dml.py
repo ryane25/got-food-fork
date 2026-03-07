@@ -27,8 +27,8 @@ OUTPUT_FILE_PATH = "../backend/db-init/02_initial_pantries_and_hours.sql"
 
 # Template used to insert entries into the pantries table.
 INSERT_PANTRY_TEMPLATE = """
-INSERT INTO pantries (id, url, name, address, city, zip, phone, email, eligibility, supported_diets, comments, created_at)
-VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})
+INSERT INTO pantries (id, url, name, address, city, zip, latitude, longitude, phone, email, eligibility, supported_diets, comments, created_at)
+VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})
 ON CONFLICT DO NOTHING;
 """
 
@@ -65,6 +65,8 @@ def postgres_prepare_value(
             return val
         case str():
             return "'" + val.replace("'", "''") + "'"
+        case float():
+            return val
         case datetime():
             return "'" + str(val) + "'"
         case list():
@@ -87,6 +89,8 @@ def insert_pantry(
     address: str,
     city: str,
     zip_code: str,
+    latitude: str,
+    longitude: str,
     phone: str | None,
     email: str | None,
     eligibility: str | None,
@@ -142,6 +146,8 @@ def insert_pantry(
             postgres_prepare_value(address),
             postgres_prepare_value(city),
             postgres_prepare_value(zip_code),
+            postgres_prepare_value(float(latitude)),
+            postgres_prepare_value(float(longitude)),
             postgres_prepare_value(phone),
             postgres_prepare_value(email),
             postgres_prepare_value(eligibility),
@@ -238,6 +244,8 @@ def main() -> None:
                 address,
                 city,
                 zip_code,
+                latitude,
+                longitude,
                 phone,
                 email,
                 eligibility,
@@ -267,6 +275,8 @@ def main() -> None:
                 address,
                 city,
                 zip_code,
+                latitude,
+                longitude,
                 phone,
                 email,
                 eligibility,
