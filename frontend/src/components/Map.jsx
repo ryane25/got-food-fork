@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllPantries, getPantryHours } from "../utils/api_requests";
+import { getAllPantries, getPantriesOpenNow, getPantryHours } from "../utils/api_requests";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -21,11 +21,12 @@ L.Icon.Default.mergeOptions({
 
 function DisplayMap() {
   const [pantryLocations, setPantryLocations] = useState([]);
-
+  const [openPantries, setOpenPantries] = useState([])
   useEffect(() => {
     // Define wrapper function to handle async behavior
     async function setFromAPI() {
       const pantries = await getAllPantries();
+      const open = await getPantriesOpenNow();
 
       /* Only obtain position and name of pantry to display.
        * TODO: Change this later to more detailed information.
@@ -33,6 +34,7 @@ function DisplayMap() {
       let locations = [];
       for (let p of pantries) {
         locations.push({
+          id : p["id"],
           position: [p["latitude"], p["longitude"]],
           name: p["name"],
           address: p["address"],
@@ -43,8 +45,8 @@ function DisplayMap() {
           hours: await getPantryHours(p["id"]),
         });
       }
-      console.log(hours);
       setPantryLocations(locations);
+      setOpenPantries(open)
     }
     setFromAPI();
   }, []); // NOTE: No dependency only runs this effect on page load, for now.
@@ -69,7 +71,7 @@ function DisplayMap() {
         />
         {pantryLocations.map((loc, index) => (
           <Marker key={index} position={loc.position}>
-            <Popup maxWidth={400} maxHeight={600}>{PopupText(loc)}</Popup>
+            <Popup maxWidth={400} maxHeight={600}>{PopupText(loc, openPantries)}</Popup>
           </Marker>
         ))}
       </MapContainer>
@@ -77,7 +79,7 @@ function DisplayMap() {
   );
 }
 
-function PopupText(loc)
+function PopupText(loc, openPantries)
 {
   if (!loc.name)
   {
@@ -108,7 +110,7 @@ function PopupText(loc)
       <h3> {loc.name} </h3>
       <p> <HiOutlineLocationMarker/>  {loc.address}</p>
       <div>
-        <p style={{ margin: "2px 0" }}> <FaClock/> OPEN/CLOSED TODO </p>
+        <p style={{ margin: "2px 0" }}> <FaClock/> {openPantries.some((p) => p.id === loc.id) ? "OPEN" : "CLOSED"} </p>
         {loc.hours && loc.hours.map((h) => (
         <p key={h.id} style={{ margin: "2px 0" }}>
           &emsp; {h.day_of_week}: {h.status === "CLOSED" ? "Closed" : `${h.open_time} - ${h.close_time ?? "varies"}`}
