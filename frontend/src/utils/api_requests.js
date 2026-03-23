@@ -16,7 +16,7 @@
  * specify true, else false.
  * @returns {Object} The result of the query.
  */
-async function getPantries(
+export async function getPantries(
   open_now = false,
   eligible_zip = undefined,
   supported_diets = undefined,
