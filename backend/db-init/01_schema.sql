@@ -61,8 +61,9 @@ CREATE TABLE IF NOT EXISTS pantries (
     url TEXT NOT NULL,   
     name VARCHAR(255) NOT NULL,   
     address VARCHAR(255) NOT NULL,   
-    city VARCHAR(100) NOT NULL,   
-    zip VARCHAR(10) NOT NULL,  
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(2) NOT NULL,   
+    zip VARCHAR(10) NOT NULL,
     latitude NUMERIC(15, 13) NOT NULL, 
     longitude NUMERIC(15, 13) NOT NULL,  
     phone VARCHAR(25),   
@@ -71,6 +72,7 @@ CREATE TABLE IF NOT EXISTS pantries (
     supported_diets supported_diet[],   
     comments TEXT,   
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    has_variable_hours BOOLEAN NOT NULL,
     CONSTRAINT eligibility_is_zip_or_any_or_any_va CHECK ( 
         eligibility IS NULL 
         OR ( 
