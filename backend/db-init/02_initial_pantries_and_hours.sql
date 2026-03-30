@@ -1474,7 +1474,7 @@ VALUES (46, 'SUNDAY', 'CLOSED', NULL, NULL)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO pantries (id, url, name, address, city, state, zip, latitude, longitude, phone, email, eligibility, supported_diets, comments, has_variable_hours)
-VALUES (47, 'https://www.westendfoodpantry.com/', 'West End Food Pantry', '5150 Fillmore Ave', 'Alexandria', 'VA', '22311', 38.83868, -77.1177, NULL, 'contact@westendfoodpantry.com', NULL, NULL, NULL, FALSE)
+VALUES (47, 'https://www.welcometoresurrection.org/help-others', 'West End Food Pantry', '5150 Fillmore Ave', 'Alexandria', 'VA', '22311', 38.83868, -77.1177, NULL, 'contact@westendfoodpantry.com', NULL, NULL, NULL, FALSE)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO pantry_hours (pantry_id, day_of_week, status, open_time, close_time)
