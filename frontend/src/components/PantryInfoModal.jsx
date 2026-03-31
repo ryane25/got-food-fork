@@ -64,18 +64,26 @@ export function PantryInfoModal({ details, onClose }) {
 
         <div className="pantry-modal-body">
           {/* Location */}
-          <div className="pantry-modal-section">
-            <span className="pantry-modal-icon">
-              <HiOutlineLocationMarker />
-            </span>
-            <span className="pantry-modal-value">
-              <span className="pantry-location-line">{address}</span>
-              <span className="pantry-location-line">
-                {city}, {state}, {zip}
+          <div className="pantry-modal-section" style={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+              <span className="pantry-modal-icon">
+                <HiOutlineLocationMarker />
               </span>
-            </span>
+              <span className="pantry-modal-value">
+                <span className="pantry-location-line">{address}</span>
+                <span className="pantry-location-line">
+                  {city}, {state}, {zip}
+                </span>
+              </span>
+            </div>
+          <a href={`https://www.google.com/maps?q=${details.latitude},${details.longitude}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pantry-directions-link"
+            >
+            Get Directions
+          </a>
           </div>
-
           {/* Hours */}
           {sortedHours.length > 0 && (
             <div className="pantry-modal-section pantry-modal-section--hours">
