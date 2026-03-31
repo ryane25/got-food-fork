@@ -1474,7 +1474,7 @@ VALUES (46, 'SUNDAY', 'CLOSED', NULL, NULL)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO pantries (url, name, address, city, state, zip, latitude, longitude, phone, email, eligibility, supported_diets, comments, has_variable_hours)
-VALUES ('https://www.westendfoodpantry.com/', 'West End Food Pantry', '5150 Fillmore Ave', 'Alexandria', 'VA', '22311', 38.83868, -77.1177, NULL, 'contact@westendfoodpantry.com', NULL, NULL, NULL, FALSE)
+VALUES ('https://www.welcometoresurrection.org/help-others', 'West End Food Pantry', '5150 Fillmore Ave', 'Alexandria', 'VA', '22311', 38.83868, -77.1177, NULL, 'contact@westendfoodpantry.com', ARRAY['22312', '22311', '22302', '22304', '22206', '22314', '22305', '22301'], NULL, 'The West End Food Pantry is located in the double garage of the Mission House of St. James United Methodist Church at 5150 Fillmore Avenue. This site is between North Beauregard Street and Seminary Road, across Fillmore Avenue from the Alexandria Campus of the Northern Virginia Community College. The pantry is open from 5:00 to 6:30 pm on Monday nights, except on days when the City of Alexandria Public Schools are closed due to inclement weather. All City of Alexandria residents may receive free food when the pantry is open. Those wishing to receive food need only bring proof of residency and show up. The pantry does not report the identity of its clientele to anyone.', FALSE)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO pantry_hours (pantry_id, day_of_week, status, open_time, close_time)
