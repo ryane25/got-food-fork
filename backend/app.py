@@ -294,7 +294,6 @@ def post_pantries():
 
     # Insert into DB
     try:
-        print(str(pantry.serialize()), flush=True)
         db.session.add(pantry)
         db.session.commit()
     except (IntegrityError, DataError) as e:

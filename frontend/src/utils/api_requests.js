@@ -194,3 +194,52 @@ export async function getEligiblePantries(eligibleZip) {
 export async function getPantriesThatSupportDiets(diets) {
   return await getPantries(undefined, undefined, diets, false);
 }
+
+/**
+ * Adds a pantry with data specified in jsonParams to the database.
+ *
+ * @param {Object} jsonParams - An object containing key : value pairs of any
+ * and all pantry fields to be added within the row.
+ * Note that the required fields are as follows:
+ * - url (string)
+ * - name (string, len < 256)
+ * - address (string, len < 256)
+ * - city (string, len < 101)
+ * - state (string, len < 3)
+ * - zip (string, len < 11)
+ * - latitude (float)
+ * - longitude (float)
+ * - has_variable_hours (boolean)
+ *
+ * The optional fields are as follows:
+ * - phone (string, len < 26)
+ * - email (string, len < 256)
+ * - eligibility (array[string, len < 11])
+ * - supported_diets (array[supported_diet])
+ * - comments (string)
+ *
+ * @example
+ * addPantry({
+ *  url: "https://www.google.com",
+ *  name: "Test Creation Pantry",
+ *  address: "123 Main Street",
+ *  city: "Arlington",
+ *  state: "VA",
+ *  zip: "20301",
+ *  latitude: 38.86860932010702,
+ *  longitude: -77.05817942501781,
+ *  has_variable_hours: false,
+ * });
+ */
+export async function addPantry(jsonParams) {
+  // Assemble form data based on object key/values
+  const formData = new FormData();
+  Object.entries(jsonParams).forEach(([k, v]) => {
+    formData.append(k, v);
+  });
+  const res = await fetch("/api/pantries", {
+    method: "POST",
+    body: formData,
+  });
+  return await res.json();
+}
