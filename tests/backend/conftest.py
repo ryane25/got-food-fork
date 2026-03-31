@@ -1,6 +1,7 @@
 import pytest
 from flask import Flask
 from app import app as _app, db as _db
+from unittest.mock import patch
 
 
 @pytest.fixture()
@@ -22,14 +23,18 @@ def client(app):
 def runner(app):
     return app.test_cli_runner()
 
+def bind_commit_to_savepoint():
+    # flush to a nested savepoint instead of real commit
+    _db.session.begin_nested()  
 
-# @pytest.fixture(autouse=True)
-# def reset_to_seed(app):
-#     with app.app_context():
-#         # Save state before test runs
-#         _db.session.execute(_db.text("SAVEPOINT seed_state"))
-#         yield
-#         # Roll back after test runs
-#         _db.session.execute(_db.text("ROLLBACK TO SAVEPOINT seed_state"))
-#         _db.session.execute(_db.text("SAVEPOINT seed_state"))  # re-arm it
-#         _db.session.commit()
+@pytest.fixture(autouse=True)
+def rollback_after_test(app):
+    with app.app_context():
+        _db.session.begin_nested()
+
+        with patch.object(_db.session, 'commit', bind_commit_to_savepoint):
+            yield
+
+        # roll back DB changes
+        _db.session.rollback()
+        _db.session.remove()
