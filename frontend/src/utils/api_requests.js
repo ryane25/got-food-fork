@@ -243,3 +243,36 @@ export async function addPantry(jsonParams) {
   });
   return await res.json();
 }
+
+/**
+ * Deletes the pantry with the given pantryId from the database.
+ *
+ * @param {number} pantryId - The pantry ID to delete from the database.
+ * @returns {boolean} True if the delete was successful, false if not/if the
+ * ID was invalid.
+ */
+export async function deletePantry(pantryId) {
+  const res = await fetch("/api/pantries/" + pantryId, { method: "DELETE" });
+  return res.status === 200 ? true : false;
+}
+
+/**
+ * Deletes a specified hourly range with ID hourlyRangeID from its corresponding
+ * pantry entry, having pantry ID pantryId. hourlyRangeID can be obtained from
+ * looking at a pantry's hours entries.
+ * 
+ * @param {number} pantryId - The ID of the pantry that contains the hourly range entry. 
+ * @param {number} hourlyRangeId - The unique ID of the hourly range to delete.
+ * @returns {boolean} True if the delete was successful, false otherwise.
+ * @example
+ * const hours = await getPantryHours(1);
+ * const wasDeleted = await deleteHourlyRangeFromPantry(1, hours[0]["id"]);
+ * const newHours = await getPantryHours(1);
+ */
+export async function deleteHourlyRangeFromPantry(pantryId, hourlyRangeId) {
+  const res = await fetch(
+    "/api/pantries/" + pantryId + "/hours/" + hourlyRangeId,
+    { method: "DELETE" },
+  );
+  return res.status === 200 ? true : false;
+}
